@@ -44,8 +44,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18,
-    color: '#000', // Set text color
-    fontFamily: 'Arial', // Set font family
+    color: '#000', 
+    fontFamily: 'Arial', 
   },
   title: {
     fontSize: 24,
