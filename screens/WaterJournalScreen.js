@@ -5,6 +5,7 @@ import { CheckBox, Button } from 'react-native-elements';
 const WaterJournalScreen = () => {
   const [text, setText] = useState('');
   const [placeholder, setPlaceholder] = useState('Type of liquid consumed'); 
+  const [volume, setVolume] = useState(''); 
   const [volumePlaceholder, setVolumePlaceholder] = useState('Enter volume'); 
   const [isMlSelected, setIsMlSelected] = useState(true); 
   const [isOzSelected, setIsOzSelected] = useState(false); 
@@ -36,7 +37,7 @@ const WaterJournalScreen = () => {
         }}
       />
       <TextInput
-        style={styles.volumeBox}
+        style={styles.liquidBox}
         placeholder={volumePlaceholder}
         value={volume}
         onChangeText={(value) => {
@@ -75,7 +76,7 @@ const WaterJournalScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
     backgroundColor: '#fff',
@@ -86,14 +87,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   liquidBox: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    width: '80%',
-    paddingHorizontal: 10,
-    marginBottom: 100,
-  },
-  volumeBox: {
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
