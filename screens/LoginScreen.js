@@ -6,8 +6,12 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    navigation.navigate('MainTabs');
+    navigation.navigate('Home');
+    setTimeout(() => {
+      navigation.navigate('MainTabs', { screen: 'Calendar' });
+    }, 1500);
   };
+
 
   return (
     <View style={styles.container}>
