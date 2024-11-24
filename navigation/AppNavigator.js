@@ -11,6 +11,8 @@ import CalendarScreen from '../screens/CalendarScreen';
 import WaterJournalScreen from '../screens/WaterJournalScreen';
 import UltrasoundScreen from '../screens/UltrasoundScreen';
 import ProfilePageScreen from '../screens/ProfilePageScreen';
+import DayDetailsScreen from '../screens/DayDetailsScreen'; 
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -24,12 +26,16 @@ const MainTabs = () => {
 
           if (route.name === 'Water Journal') {
             iconName = focused ? 'water' : 'water-outline';
+
           } else if (route.name === 'Ultrasound') {
             iconName = focused ? 'pulse' : 'pulse-outline';
+
           } else if (route.name === 'Profile Page') {
             iconName = focused ? 'person' : 'person-outline';
+
           } else if (route.name === 'Urine Journal') {
             iconName = focused ? 'journal' : 'journal-outline';
+            
           } else if (route.name === 'Calendar') {
             iconName = focused ? 'calendar' : 'calendar-outline';
           }
@@ -55,6 +61,8 @@ const AppNavigator = () => {
         <Stack.Screen name="Login" component={LoginScreen} options={{headerShown:false}}/>
         <Stack.Screen name="Home" component={HomeScreen} options={{headerShown:false}}/>
         <Stack.Screen name="MainTabs" component={MainTabs} options={{headerShown:false}}/>
+        <Stack.Screen name="DayDetail" component={DayDetailsScreen} options={{headerShown:false}}/>
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
