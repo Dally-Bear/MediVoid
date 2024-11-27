@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { ButtonGroup, Button } from 'react-native-elements';
+//import UltrasoundScreen from '../screens/UltrasoundScreen';
 
 const UrineJournalScreen = () => {
   const [sliderValue, setSliderValue] = useState(50);
@@ -25,7 +26,7 @@ const UrineJournalScreen = () => {
       <View style={[styles.colorBox, { backgroundColor: yellowShade }]} />
       <Slider
         style={styles.slider}
-        minimumValue={0}
+        minimumValue={15}
         maximumValue={100}
         value={sliderValue}
         onValueChange={setSliderValue}
@@ -36,6 +37,7 @@ const UrineJournalScreen = () => {
       <Button
         title="Enter without a scan"
         buttonStyle={styles.withoutScanButton}
+        //onClick={handleClick}
         
       />
       <Button
