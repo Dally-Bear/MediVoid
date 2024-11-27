@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: '80%',
     paddingHorizontal: 10,
+    marginTop: 20,
     marginBottom: 20,
   },
   checkboxContainer: {

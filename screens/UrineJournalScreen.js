@@ -37,7 +37,7 @@ const UrineJournalScreen = () => {
       <Button
         title="Enter without a scan"
         buttonStyle={styles.withoutScanButton}
-        //onClick={handleClick}
+       
         
       />
       <Button
@@ -52,7 +52,7 @@ const UrineJournalScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start', 
+    justifyContent: 'center', 
     alignItems: 'center',
     paddingTop: 20, 
   },
@@ -79,22 +79,26 @@ const styles = StyleSheet.create({
   colorBox: {
     width: 100,
     height: 100,
+    marginTop: 20,
     marginBottom: 20,
     borderRadius: 10, 
   },
   slider: {
     width: 300,
     borderRadius: 10, 
-    marginBottom: 50,
+    marginTop: 20,
+    marginBottom: 20,
   },
   withoutScanButton: {
     backgroundColor: '#007bff', 
-    marginTop: 20, 
+    marginTop: 20,
+    marginBottom: 20, 
     width: 200, 
   },
   withScanButton: {
     backgroundColor: '#007bff', 
-    marginTop: 20, 
+    marginTop: 20,
+    marginBottom: 20, 
     width: 200, 
   },
 });
