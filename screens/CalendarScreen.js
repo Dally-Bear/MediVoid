@@ -1,10 +1,29 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import Calendar from 'react-calendar';
+import '../screens/styles/Calendar.css'; 
 
-const CalendarScreen = () => {
+const CalendarScreen = ({ navigation }) => {
+  const [selectedDate, setSelectedDate] = React.useState(null);
+
+  const handleDayClick = (day) => {
+    if (selectedDate && selectedDate.toDateString() === day.toDateString()) {
+      navigation.navigate('DayDetail', { date: day });
+    } else {
+      setSelectedDate(day);
+    }
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Calendar</Text>
+    <View style={{ flex: 1 }}>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+      <View style={styles.container}>
+        <Calendar
+          onChange={setSelectedDate}
+          value={selectedDate}
+          onClickDay={handleDayClick}
+        />
+      </View>
     </View>
   );
 };
@@ -12,14 +31,11 @@ const CalendarScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    padding: 16,
+    width: '100%',
+    height: '100%',
     backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 24,
-    textAlign: 'center',
   },
 });
 
