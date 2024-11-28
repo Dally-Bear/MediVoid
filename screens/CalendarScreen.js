@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'; // Ensure the correct path to the CSS file
+import '../screens/styles/Calendar.css';
 
 const CalendarScreen = ({ navigation }) => {
   const [selectedDate, setSelectedDate] = React.useState(null);
