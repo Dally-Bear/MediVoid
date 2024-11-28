@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Calendar from 'react-calendar';
-import '../screens/styles/Calendar.css'; 
+import 'react-calendar/dist/Calendar.css'; // Ensure the correct path to the CSS file
 
 const CalendarScreen = ({ navigation }) => {
   const [selectedDate, setSelectedDate] = React.useState(null);
@@ -16,7 +16,6 @@ const CalendarScreen = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
       <View style={styles.container}>
         <Calendar
           onChange={setSelectedDate}
@@ -33,9 +32,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#fff',
   },
 });
 

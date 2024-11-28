@@ -8,7 +8,7 @@ const LoginScreen = ({ navigation }) => {
   const handleLogin = () => {
     navigation.navigate('Home');
     setTimeout(() => {
-      navigation.navigate('MainTabs', { screen: 'Calendar' });
+      navigation.navigate('MainTabs', { screen: 'Profile Page' });
     }, 1500);
   };
 
