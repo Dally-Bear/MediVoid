@@ -1,13 +1,17 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 
 const DayDetailScreen = ({ route, navigation }) => {
   const { date } = route.params;
+  const dateObject = new Date(date); 
+
+  
+  const adjustedDate = new Date(dateObject.getTime() + dateObject.getTimezoneOffset() * 60000);
 
   return (
     <View style={styles.container}>
-      <Text>Details for {date.toDateString()}</Text>
-      <Button title="Back to Calendar" onPress={() => navigation.goBack()} />
+      <Text>{adjustedDate.toDateString()}</Text>
+      <Button title="Return" onPress={() => navigation.goBack()} />
     </View>
   );
 };
@@ -17,7 +21,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
   },
 });
 

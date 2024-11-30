@@ -54,21 +54,24 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center', 
     alignItems: 'center',
-    paddingTop: 20, 
+    
   },
   title: {
     fontSize: 16,
     marginBottom: 5,
   },
   buttonGroup: {
-    marginBottom: 20,
     backgroundColor: 'transparent', 
     borderWidth: 0, 
     marginBottom: 50,
+    alignContent: 'center',
+    
+    
   },
   buttons: {
     backgroundColor: '#007bff', 
     width: 100,
+    padding: 0,
   },
   selectedButton: {
     backgroundColor: '#0056b3', 
