@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { CheckBox, Button } from 'react-native-elements';
+import { neon } from "@neondatabase/serverless";
 
 const WaterJournalScreen = () => {
   const [text, setText] = useState('');
@@ -18,6 +19,28 @@ const WaterJournalScreen = () => {
   const handleOzCheckbox = () => {
     setIsMlSelected(false);
     setIsOzSelected(true);
+  };
+
+  const updateWaterJournal = async () => {
+    try {
+      "use server";
+      const databaseUrl = process.env.EXPO_PUBLIC_DATABASE_URL;
+      console.log("Using Database URL:", databaseUrl);
+
+      if (!databaseUrl) {
+        throw new Error("DATABASE_URL is not set in .env file");
+      }
+
+      const sql = neon(databaseUrl);
+      const response = await sql`
+        INSERT INTO mv_water_journal (wj_date, user_id, wj_type, wj_volume, wj_volume_unit)
+        VALUES (CURRENT_TIMESTAMP, 1, ${text}, ${volume}, ${isMlSelected ? 'ml' : 'oz'})
+      `;
+      
+      console.log("Database updated:", response);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -67,7 +90,8 @@ const WaterJournalScreen = () => {
       <Button
         title="Submit"
         buttonStyle={styles.enterButton}
-        onPress={() => console.log('Button Pressed')}
+        //onPress={() => console.log('Button Pressed')}
+        onPress={updateWaterJournal}
       />
     </View>
   );
