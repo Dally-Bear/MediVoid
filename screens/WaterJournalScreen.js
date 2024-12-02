@@ -40,7 +40,11 @@ const WaterJournalScreen = () => {
       console.log("Database updated:", response);
     } catch (error) {
       console.error("Error:", error);
-    }
+    } 
+
+    setVolume('');
+    setText('');   
+
   };
 
   return (
