@@ -4,13 +4,26 @@ import Slider from '@react-native-community/slider';
 import { ButtonGroup, Button } from 'react-native-elements';
 import { neon } from "@neondatabase/serverless";
 
-const UrineJournalScreen = () => {
-  const [sliderValue, setSliderValue] = useState(55);
-  const [selectedIndex, setSelectedIndex] = useState(0); 
-  const yellowShade = `hsl(45, 100%, ${100 - sliderValue / 2}%)`;
+// Utility function to convert HSL to Hex
+const hslToHex = (h, s, l) => {
+  l /= 100;
+  const a = s * Math.min(l, 1 - l) / 100;
+  const f = n => {
+    const k = (n + h / 30) % 12;
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * color).toString(16).padStart(2, '0'); // Convert to hex and pad with zeroes
+  };
+  return `${f(0)}${f(8)}${f(4)}`; // Remove the '#' character
+};
 
-  const updateUrineJournal = async () => {
+const UrineJournalScreen = ({ navigation }) => {
+  const [sliderValue, setSliderValue] = useState(55);
+  const [selectedIndex, setSelectedIndex] = useState('M'); // Initial value set to 'M'
+  const [yellowShade, setYellowShade] = useState(hslToHex(45, 100, 100 - 55 / 2)); // Initial color
+
+  const updateUrineJournal = async (isScanned) => {
     try {
+      const voided = isScanned ? 1 : 0;
       "use server";
       const databaseUrl = process.env.EXPO_PUBLIC_DATABASE_URL;
       console.log("Using Database URL:", databaseUrl);
@@ -20,9 +33,10 @@ const UrineJournalScreen = () => {
       }
 
       const sql = neon(databaseUrl);
+      const validUserId = 1; // Replace with a valid user_id from your database
       const response = await sql`
-        INSERT INTO mv_urine_journal (wj_date, user_id, wj_type, wj_volume, wj_volume_unit)
-        VALUES (CURRENT_TIMESTAMP, 1, ${text}, ${volume}, ${isMlSelected ? 'ml' : 'oz'})
+        INSERT INTO mv_urine_journal (uj_date, user_id, uj_volume, uj_void, uj_color)
+        VALUES (CURRENT_TIMESTAMP,666666, ${selectedIndex}, ${voided}, ${yellowShade})
       `;
       
       console.log("Database updated:", response);
@@ -30,11 +44,9 @@ const UrineJournalScreen = () => {
       console.error("Error:", error);
     } 
 
-    setSliderValue('42.5');
-    setText('');   
-
+    setSliderValue(42.5);
+    setSelectedIndex('M'); // Reset selected index
   };
-
 
   return (
     <View style={styles.container}>
@@ -45,16 +57,19 @@ const UrineJournalScreen = () => {
         buttonStyle={styles.buttons}
         selectedButtonStyle={styles.selectedButton}
         textStyle={styles.buttonText}
-        selectedIndex={selectedIndex} 
-        onPress={(index) => setSelectedIndex(index)} 
+        selectedIndex={['H', 'M', 'L'].indexOf(selectedIndex)} 
+        onPress={(index) => setSelectedIndex(['H', 'M', 'L'][index])} // Set the selected value
       />
-      <View style={[styles.colorBox, { backgroundColor: yellowShade }]} />
+      <View style={[styles.colorBox, { backgroundColor: `#${yellowShade}` }]} />
       <Slider
         style={styles.slider}
         minimumValue={15}
         maximumValue={100}
         value={sliderValue}
-        onValueChange={setSliderValue}
+        onValueChange={(value) => {
+          setSliderValue(value);
+          setYellowShade(hslToHex(45, 100, 100 - value / 2)); // Update color
+        }}
         minimumTrackTintColor="#FFD700" 
         maximumTrackTintColor="#8B0000" 
         thumbTintColor="#FFFF00" 
@@ -62,18 +77,15 @@ const UrineJournalScreen = () => {
       <Button
         title="Enter without a scan"
         buttonStyle={styles.withoutScanButton}
-        onPress={updateUrineJournal}
-       
-        
+        onPress={() => updateUrineJournal(false)} // Pass false to indicate no scan
       />
       <Button
         title="Enter with a scan"
         buttonStyle={styles.withScanButton}   
         onPress={() => {
-          updateUrineJournal();
+          updateUrineJournal(true); // Pass true to indicate a scan
           navigation.navigate('UltrasoundScreen');
         }}
-        
       />
     </View>
   );
@@ -84,7 +96,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center', 
     alignItems: 'center',
-    
   },
   title: {
     fontSize: 16,
@@ -95,8 +106,6 @@ const styles = StyleSheet.create({
     borderWidth: 0, 
     marginBottom: 50,
     alignContent: 'center',
-    
-    
   },
   buttons: {
     backgroundColor: '#007bff', 
