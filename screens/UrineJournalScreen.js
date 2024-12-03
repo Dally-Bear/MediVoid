@@ -32,7 +32,6 @@ const UrineJournalScreen = ({ navigation }) => {
       }
 
       const sql = neon(databaseUrl);
-     
       const response = await sql`
         INSERT INTO mv_urine_journal (uj_date, user_id, uj_volume, uj_void, uj_color)
         VALUES (CURRENT_TIMESTAMP,666666, ${selectedIndex}, ${uj_void}, ${yellowShade})
@@ -96,6 +95,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center', 
     alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    
   },
   title: {
     fontSize: 16,

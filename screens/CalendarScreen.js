@@ -66,12 +66,13 @@ const CalendarScreen = ({ navigation }) => {
           textDayHeaderFontSize: 14, 
           textSectionTitleColor: 'black', 
           textSectionTitleDisabledColor: 'gray', 
+          
           'stylesheet.calendar.header': {
             week: {
               marginTop: 5,
               flexDirection: 'row',
               justifyContent: 'space-between',
-              backgroundColor: 'white', 
+              backgroundColor: '#FFFFFF', 
               paddingVertical: 10, 
             },
           },
@@ -86,20 +87,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#FFFFFF',
     paddingTop: 50,
   },
   calendar: {
     flex: 1,
     width: 350,
     height: 350,
-     
+    backgroundColor: '#FFFFFF', 
     borderWidth: 0,
     borderColor: 'transparent',
   },
   headerContainer: {
     padding: 10,
-    backgroundColor: 'white',
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
   },
   headerText: {
@@ -113,17 +114,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 5, 
     marginHorizontal: 5, 
+    backgroundColor: '#FFFFFF',
   },
   selectedDay: {
-    backgroundColor: 'blue',
+    backgroundColor: '#007bff',
     borderRadius: 20,
   },
+  
   dayText: {
     fontSize: 18, 
+    
   },
   disabledText: {
     color: 'gray',
   },
+  
 });
 
 export default CalendarScreen;

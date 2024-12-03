@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Alert, TouchableOpacity, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Button } from 'react-native';
 import { neon } from "@neondatabase/serverless";
 
-
-const DayDetailScreen = ({ route, navigation }) => {
+const DayDetailsScreen = ({ route, navigation }) => {
   const { date } = route.params || {};
   const dateObject = new Date(date);
   const adjustedDate = new Date(dateObject.getTime() + dateObject.getTimezoneOffset() * 60000);
@@ -13,7 +12,7 @@ const DayDetailScreen = ({ route, navigation }) => {
   console.log("Using Database URL:", databaseUrl);
 
   useEffect(() => {
-    const fetchWaterJournal = async () => {
+    const fetchJournal = async () => {
       try {
         "use server";
 
@@ -22,19 +21,34 @@ const DayDetailScreen = ({ route, navigation }) => {
         }
 
         const sql = neon(databaseUrl);
-        const response = await sql`
-          SELECT * FROM mv_water_journal WHERE wj_date::date = ${adjustedDate.toISOString().split('T')[0]}
-        `;
+        const adjustedDateStr = adjustedDate.toISOString().split('T')[0];
+        console.log("Fetching data for date:", adjustedDateStr);
 
-        setJournalData(response);
+        const waterResponse = await sql`
+          SELECT 'water' as type, wj_date as date, user_id, wj_type, wj_volume, wj_volume_unit 
+          FROM mv_water_journal 
+          WHERE wj_date::date = ${adjustedDateStr}
+        `;
+        console.log("Water Journal Response:", waterResponse);
+
+        const urineResponse = await sql`
+          SELECT 'urine' as type, uj_date as date, user_id, uj_volume, uj_void, uj_color 
+          FROM mv_urine_journal 
+          WHERE uj_date::date = ${adjustedDateStr}
+        `;
+        console.log("Urine Journal Response:", urineResponse);
+
+        const combinedData = [...waterResponse, ...urineResponse].sort((a, b) => new Date(a.date) - new Date(b.date));
+        console.log("Combined Data:", combinedData);
+
+        setJournalData(combinedData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    fetchWaterJournal();
-  }, []); 
-
+    fetchJournal();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -45,17 +59,34 @@ const DayDetailScreen = ({ route, navigation }) => {
         {journalData.length > 0 ? (
           journalData.map((entry, index) => (
             <View key={index} style={styles.entry}>
-              <Text>Type of liquid consumed: {entry.wj_type} </Text>
-              <Text>Volume: {entry.wj_volume} {entry.wj_volume_unit}</Text>
-              <TouchableOpacity style={styles.deleteButton} onPress={() => deleteEntry(entry.wj_date)}>
-                <Text style={styles.deleteButtonText}>X</Text>
-              </TouchableOpacity>
+              <View style={styles.entryRow}>
+                <View style={styles.entryTextContainer}>
+                  {entry.type === 'water' ? (
+                    <View style={styles.waterEntry}>
+                      <Text>Entry type: Water Journal</Text>
+                      <Text>Date: {new Date(entry.date).toLocaleString()}</Text>
+                      <Text>Type of liquid consumed: {entry.wj_type}</Text>
+                      <Text>Volume: {entry.wj_volume} {entry.wj_volume_unit}</Text>
+                    </View>
+                  ) : (
+                    <View style={styles.urineEntry}>
+                      <Text>Entry type: Urine Journal</Text>
+                      <Text>Date: {new Date(entry.date).toLocaleString()}</Text>
+                      <Text>Volume: {entry.uj_volume}</Text>
+                      <Text>Void: {entry.uj_void}</Text>
+                      <Text>Color: {entry.uj_color}</Text>
+                    </View>
+                  )}
+                </View>
+                <TouchableOpacity style={styles.deleteButton} onPress={() => deleteEntry(entry.date)}>
+                  <Text style={styles.deleteButtonText}>X</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           ))
         ) : (
           <Text>No entries for this day.</Text>
         )}
-    
       </ScrollView>
       <View style={styles.returnButtonContainer}>
         <Button title="Return" onPress={() => navigation.goBack()} />
@@ -67,10 +98,10 @@ const DayDetailScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 20,
+    backgroundColor: '#FFFFFF',
   },
   dateContainer: {
-    padding: 16,
-    backgroundColor: '#f8f8f8',
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
   },
@@ -88,8 +119,31 @@ const styles = StyleSheet.create({
   },
   entry: {
     marginVertical: 10,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    
+    padding: 10,
+    width: '100%',
+  },
+  entryRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    width: '100%',
+  },
+  entryTextContainer: {
+    flex: 1,
+  },
+  waterEntry: {
+    backgroundColor: '#ADD8E6',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  urineEntry: {
+    backgroundColor: '#FFFF6E',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
   },
   deleteButton: {
     backgroundColor: 'red',
@@ -104,13 +158,9 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
-
   returnButtonContainer: {
-    padding: 16,
-    backgroundColor: '#f8f8f8',
-    borderTopWidth: 1,
-    borderTopColor: '#ddd',
+    marginTop: 20,
   },
 });
 
-export default DayDetailScreen;
+export default DayDetailsScreen;

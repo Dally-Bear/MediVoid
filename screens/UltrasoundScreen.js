@@ -55,14 +55,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 16,
     paddingVertical: 90,
-    backgroundColor: "#fff",
+    backgroundColor: '#FFFFFF',
   },
   directions: {
     fontSize: 16,
     textAlign: "center",
     padding: 20,
     marginBottom: 20,
-    backgroundColor: "#ebf5ff",
+    backgroundColor: '#FFFFFF',
     borderRadius: 5,
   },
   title: {
