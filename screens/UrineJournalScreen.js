@@ -17,13 +17,12 @@ const hslToHex = (h, s, l) => {
 };
 
 const UrineJournalScreen = ({ navigation }) => {
-  const [sliderValue, setSliderValue] = useState(55);
+  const [sliderValue, setSliderValue] = useState(58);
   const [selectedIndex, setSelectedIndex] = useState('M'); 
   const [yellowShade, setYellowShade] = useState(hslToHex(45, 100, 100 - 55 / 2)); 
 
-  const updateUrineJournal = async (isScanned) => {
+  const updateUrineJournal = async (uj_void) => {
     try {
-      const voided = isScanned ? 1 : 0;
       "use server";
       const databaseUrl = process.env.EXPO_PUBLIC_DATABASE_URL;
       console.log("Using Database URL:", databaseUrl);
@@ -33,10 +32,10 @@ const UrineJournalScreen = ({ navigation }) => {
       }
 
       const sql = neon(databaseUrl);
-      const validUserId = 1; 
+     
       const response = await sql`
         INSERT INTO mv_urine_journal (uj_date, user_id, uj_volume, uj_void, uj_color)
-        VALUES (CURRENT_TIMESTAMP,666666, ${selectedIndex}, ${voided}, ${yellowShade})
+        VALUES (CURRENT_TIMESTAMP,666666, ${selectedIndex}, ${uj_void}, ${yellowShade})
       `;
       
       console.log("Database updated:", response);
@@ -44,7 +43,7 @@ const UrineJournalScreen = ({ navigation }) => {
       console.error("Error:", error);
     } 
 
-    setSliderValue(42.5);
+    setSliderValue(58);
     setSelectedIndex('M'); 
   };
 
@@ -58,7 +57,7 @@ const UrineJournalScreen = ({ navigation }) => {
         selectedButtonStyle={styles.selectedButton}
         textStyle={styles.buttonText}
         selectedIndex={['H', 'M', 'L'].indexOf(selectedIndex)} 
-        onPress={(index) => setSelectedIndex(['H', 'M', 'L'][index])}
+        onPress={(index) => setSelectedIndex(['H', 'M', 'L'][index])} 
       />
       <View style={[styles.colorBox, { backgroundColor: `#${yellowShade}` }]} />
       <Slider
@@ -77,13 +76,14 @@ const UrineJournalScreen = ({ navigation }) => {
       <Button
         title="Enter without a scan"
         buttonStyle={styles.withoutScanButton}
-        onPress={() => updateUrineJournal(false)} 
+        onPress={() => updateUrineJournal(null)} // Pass null to indicate no scan
       />
       <Button
         title="Enter with a scan"
         buttonStyle={styles.withScanButton}   
         onPress={() => {
-          updateUrineJournal(true);
+          const scanResult = 1; 
+          updateUrineJournal(scanResult); 
           navigation.navigate('UltrasoundScreen');
         }}
       />
