@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Keyboard } from 'react-native';
 import { CheckBox, Button } from 'react-native-elements';
 import { neon } from "@neondatabase/serverless";
 
@@ -38,6 +38,7 @@ const WaterJournalScreen = () => {
       `;
       
       console.log("Database updated:", response);
+      Keyboard.dismiss();
     } catch (error) {
       console.error("Error:", error);
     } 
