@@ -11,15 +11,15 @@ const hslToHex = (h, s, l) => {
   const f = n => {
     const k = (n + h / 30) % 12;
     const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-    return Math.round(255 * color).toString(16).padStart(2, '0'); // Convert to hex and pad with zeroes
+    return Math.round(255 * color).toString(16).padStart(2, '0'); 
   };
   return `${f(0)}${f(8)}${f(4)}`; // Remove the '#' character
 };
 
 const UrineJournalScreen = ({ navigation }) => {
   const [sliderValue, setSliderValue] = useState(55);
-  const [selectedIndex, setSelectedIndex] = useState('M'); // Initial value set to 'M'
-  const [yellowShade, setYellowShade] = useState(hslToHex(45, 100, 100 - 55 / 2)); // Initial color
+  const [selectedIndex, setSelectedIndex] = useState('M'); 
+  const [yellowShade, setYellowShade] = useState(hslToHex(45, 100, 100 - 55 / 2)); 
 
   const updateUrineJournal = async (isScanned) => {
     try {
@@ -33,7 +33,7 @@ const UrineJournalScreen = ({ navigation }) => {
       }
 
       const sql = neon(databaseUrl);
-      const validUserId = 1; // Replace with a valid user_id from your database
+      const validUserId = 1; 
       const response = await sql`
         INSERT INTO mv_urine_journal (uj_date, user_id, uj_volume, uj_void, uj_color)
         VALUES (CURRENT_TIMESTAMP,666666, ${selectedIndex}, ${voided}, ${yellowShade})
@@ -45,7 +45,7 @@ const UrineJournalScreen = ({ navigation }) => {
     } 
 
     setSliderValue(42.5);
-    setSelectedIndex('M'); // Reset selected index
+    setSelectedIndex('M'); 
   };
 
   return (
@@ -58,7 +58,7 @@ const UrineJournalScreen = ({ navigation }) => {
         selectedButtonStyle={styles.selectedButton}
         textStyle={styles.buttonText}
         selectedIndex={['H', 'M', 'L'].indexOf(selectedIndex)} 
-        onPress={(index) => setSelectedIndex(['H', 'M', 'L'][index])} // Set the selected value
+        onPress={(index) => setSelectedIndex(['H', 'M', 'L'][index])}
       />
       <View style={[styles.colorBox, { backgroundColor: `#${yellowShade}` }]} />
       <Slider
@@ -68,7 +68,7 @@ const UrineJournalScreen = ({ navigation }) => {
         value={sliderValue}
         onValueChange={(value) => {
           setSliderValue(value);
-          setYellowShade(hslToHex(45, 100, 100 - value / 2)); // Update color
+          setYellowShade(hslToHex(45, 100, 100 - value / 2)); 
         }}
         minimumTrackTintColor="#FFD700" 
         maximumTrackTintColor="#8B0000" 
@@ -77,13 +77,13 @@ const UrineJournalScreen = ({ navigation }) => {
       <Button
         title="Enter without a scan"
         buttonStyle={styles.withoutScanButton}
-        onPress={() => updateUrineJournal(false)} // Pass false to indicate no scan
+        onPress={() => updateUrineJournal(false)} 
       />
       <Button
         title="Enter with a scan"
         buttonStyle={styles.withScanButton}   
         onPress={() => {
-          updateUrineJournal(true); // Pass true to indicate a scan
+          updateUrineJournal(true);
           navigation.navigate('UltrasoundScreen');
         }}
       />
