@@ -42,10 +42,13 @@ const WaterJournalScreen = () => {
     } catch (error) {
       console.error("Error:", error);
     } 
-
+    setVolumePlaceholder('Enter volume');
     setVolume('');
-    setText('');   
+    
+    setPlaceholder('Type of liquid consumed');
+    setText('');
   };
+  
 
   return (
     <View style={styles.container}>
