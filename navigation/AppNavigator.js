@@ -43,7 +43,7 @@ const MainTabs = () => {
           return <Icon name={iconName} size={size} color={color} />;
         },
         tabBarStyle: {
-          backgroundColor: '	#F5F5F5', // Set the background color here
+          backgroundColor: '	#F5F5F5',
         },
         headerShown: false,
       })}

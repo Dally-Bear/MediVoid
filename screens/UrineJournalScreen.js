@@ -50,13 +50,13 @@ const UrineJournalScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.title}>Estimated amount of urine:</Text>
       <ButtonGroup
-        buttons={['High', 'Medium', 'Low']}
+        buttons={['Low', 'Medium', 'High']}
         containerStyle={styles.buttonGroup}
         buttonStyle={styles.buttons}
         selectedButtonStyle={styles.selectedButton}
         textStyle={styles.buttonText}
-        selectedIndex={['H', 'M', 'L'].indexOf(selectedIndex)} 
-        onPress={(index) => setSelectedIndex(['H', 'M', 'L'][index])} 
+        selectedIndex={['L', 'M', 'H'].indexOf(selectedIndex)} 
+        onPress={(index) => setSelectedIndex(['L', 'M', 'H'][index])} 
       />
       <View style={[styles.colorBox, { backgroundColor: `#${yellowShade}` }]} />
       <Slider
