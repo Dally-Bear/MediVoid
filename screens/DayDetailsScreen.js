@@ -50,6 +50,35 @@ const DayDetailsScreen = ({ route, navigation }) => {
     fetchJournal();
   }, []);
 
+  deleteEntry = async (entryDate) => {
+    try {
+      "use server";
+  
+      if (!databaseUrl) {
+        throw new Error("DATABASE_URL is not set in .env file");
+      }
+  
+      const sql = neon(databaseUrl);
+      const formattedDate = entryDate.toISOString().replace('T', ' ').replace('Z', ''); 
+  
+      console.log(`Formatted date for deletion: ${formattedDate}`);
+  
+      console.log(`Deleting from mv_water_journal where wj_date = ${formattedDate}`);
+      await sql`DELETE FROM mv_water_journal WHERE wj_date = ${formattedDate};`;
+  
+      console.log(`Deleting from mv_urine_journal where uj_date = ${formattedDate}`);
+      await sql`DELETE FROM mv_urine_journal WHERE uj_date = ${formattedDate};`;
+  
+      console.log("Entry deleted from database");
+  
+      const updatedJournalData = journalData.filter((entry) => entry.date !== entryDate);
+      setJournalData(updatedJournalData);
+    } catch (error) {
+      console.error("Error deleting entry:", error);
+    }
+  };
+  
+
   return (
     <View style={styles.container}>
       <View style={styles.dateContainer}>

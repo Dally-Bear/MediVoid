@@ -44,7 +44,6 @@ const WaterJournalScreen = () => {
 
     setVolume('');
     setText('');   
-
   };
 
   return (
@@ -107,7 +106,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#fff',
   },
   title: {
     fontSize: 24,

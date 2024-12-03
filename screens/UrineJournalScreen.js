@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
     borderWidth: 0, 
     marginBottom: 50,
     alignContent: 'center',
+    width: '70%',
   },
   buttons: {
     backgroundColor: '#007bff', 
