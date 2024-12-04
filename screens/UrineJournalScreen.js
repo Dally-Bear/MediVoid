@@ -103,16 +103,16 @@ const UrineJournalScreen = ({ }) => {
         maximumTrackTintColor="#8B0000" 
         thumbTintColor="#FFFF00" 
       />
-      <Button
+      {!showScan&&<Button
         title="Enter without a scan"
         buttonStyle={styles.withoutScanButton}
         onPress={() => updateUrineJournal(null)} // Pass null to indicate no scan
-      />
-      <Button
+      />}
+      {!showScan&&<Button
         title="Enter with a scan"
         buttonStyle={styles.withScanButton}   
         onPress={() => {setShowScan(true)}}
-      />
+      />}
 
       {showScan&&<Text style={styles.directions}>{detailText}</Text>}
       {showScan&&scanButton&&<Button buttonStyle ={styles.startScanButton} title="Start Scan" onPress={scanStart} />}

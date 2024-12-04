@@ -65,10 +65,13 @@ const styles = StyleSheet.create({
   directions: {
     fontSize: 16,
     textAlign: "center",
+    textAlignVertical: "center",
     padding: 20,
     marginBottom: 20,
     backgroundColor: "#ebf5ff",
     borderRadius: 5,
+    height: 100,
+    width: 300,
   },
   title: {
     fontSize: 24,
