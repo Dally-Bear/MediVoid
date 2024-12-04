@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
+<<<<<<< Updated upstream
 import { Button } from "react-native-elements";
+=======
+import { Button } from 'react-native-elements';
+
+>>>>>>> Stashed changes
 
 const UltrasoundScreen = () => {
   const [randomNumber, setRandomNumber] = useState(0);
@@ -42,8 +47,13 @@ const UltrasoundScreen = () => {
         resizeMode="contain"
       />
       <Text style={styles.directions}>{detailText}</Text>
+<<<<<<< Updated upstream
       <Text style={styles.title}>{randomNumber}</Text>
       <Button style ={styles.button} title="Start Scan" onPress={handleClick} />
+=======
+      {scanButton&&<Button buttonStyle={styles.button} title="Start Scan" onPress={handleClick} />}
+      {!scanButton&&<Button buttonStyle={styles.button} title="Confirm" onPress={resetScreen} />}
+>>>>>>> Stashed changes
     </View>
   );
 };
@@ -76,12 +86,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#007bff', 
-    padding: 5,
-    borderRadius: 5,
-    alignItems: 'center',
-    marginTop: 16,
+    width: 200,
+    backgroundColor: "#007bff",
+    marginTop: 20,
+    boarder:1,
+    borderColor: '#007bff',
   },
+  
 });
 
 export default UltrasoundScreen;

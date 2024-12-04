@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { ButtonGroup, Button } from 'react-native-elements';
 import { neon } from "@neondatabase/serverless";
@@ -86,6 +86,19 @@ const UrineJournalScreen = ({ navigation }) => {
           navigation.navigate('UltrasoundScreen');
         }}
       />
+<<<<<<< Updated upstream
+=======
+
+      {showScan&&<Text style={styles.directions}>{detailText}</Text>}
+      {showScan&&scanButton&&<Button buttonStyle ={styles.startScanButton} title="Start Scan" onPress={scanStart} />}
+      {showScan&&!scanButton&&<Button buttonStyle ={styles.saveButton} title="Save" onPress={()=>{
+        updateUrineJournal(scanResult);
+        setDetailText('Position the scanner appropriately, then when ready tap start scan to initiate the scan.');
+        setScanButton(true);
+        setShowScan(false);
+        setScanResult(null);
+        }} />}
+>>>>>>> Stashed changes
     </View>
   );
 };
@@ -145,6 +158,34 @@ const styles = StyleSheet.create({
     marginBottom: 20, 
     width: 200, 
   },
+<<<<<<< Updated upstream
+=======
+  logo: {
+    width: "60%",
+    height: "40%",
+    marginBottom: 20,
+  },  
+  directions: {
+    fontSize: 16,
+    textAlign: "center",
+    padding: 20,
+    marginBottom: 20,
+    backgroundColor: "#ebf5ff",
+    borderRadius: 5,
+  },
+  startScanButton: {
+    backgroundColor: '#007bff', 
+    marginTop: 20,
+    marginBottom: 20, 
+    width: 200, 
+  },
+  saveButton: {
+    backgroundColor: '#007bff', 
+    marginTop: 20,
+    marginBottom: 20, 
+    width: 200, 
+  },
+>>>>>>> Stashed changes
 });
 
 export default UrineJournalScreen;
