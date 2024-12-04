@@ -1,17 +1,12 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
-<<<<<<< Updated upstream
-import { Button } from "react-native-elements";
-=======
 import { Button } from 'react-native-elements';
 
->>>>>>> Stashed changes
 
 const UltrasoundScreen = () => {
-  const [randomNumber, setRandomNumber] = useState(0);
-  const [ultraImage, setUltraImage] = useState(require('../assets/scannerposition.png'));
+  const [ultraImage, setUltraImage] = useState(require('../assets/images/scannerposition.png'));
   const [detailText, setDetailText] = useState('Position the scanner relative to the diagram depicted above, when ready press the button to start the scan.');
-
+  const [scanButton, setScanButton] = useState(true);
   const randNumberGenerator = () => {
     let ultraNum = Math.floor(Math.random() * 350 + 1);
     if (ultraNum > 100) {
@@ -25,35 +20,35 @@ const UltrasoundScreen = () => {
 
   const handleClick = () => {
     const newNumber = randNumberGenerator();
-    setRandomNumber(newNumber);
     if (newNumber < 50) {
-      setUltraImage(require('../assets/void.png'));
+      setUltraImage(require('../assets/images/void.png'));
       setDetailText('The scan is complete, results show bladder is mostly voided.');
-    } else if (newNumber < 150) {
-      setUltraImage(require('../assets/partial.png'));
+    } else if (newNumber < 100) {
+      setUltraImage(require('../assets/images/partial.png'));
       setDetailText('The scan is complete, results show bladder is partially voided.');
     } else {
-      setUltraImage(require('../assets/full.png'));
+      setUltraImage(require('../assets/images/full.png'));
       setDetailText('The scan is complete, results show bladder bladder is not being voided enough, if the issue persists please consult a doctor');
     }
+    setScanButton(false);
+  };
+  const resetScreen = () => {
+    setUltraImage(require('../assets/images/scannerposition.png'));
+    setDetailText('Position the scanner relative to the diagram depicted above, when ready press the button to start the scan.');
+    setScanButton(true);
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Ultrasound Screen</Text>
+      <Text style={styles.title}>Ultrasound Scanner 5000</Text>
       <Image
         source={ultraImage}
         style={styles.logo}
         resizeMode="contain"
       />
       <Text style={styles.directions}>{detailText}</Text>
-<<<<<<< Updated upstream
-      <Text style={styles.title}>{randomNumber}</Text>
-      <Button style ={styles.button} title="Start Scan" onPress={handleClick} />
-=======
       {scanButton&&<Button buttonStyle={styles.button} title="Start Scan" onPress={handleClick} />}
       {!scanButton&&<Button buttonStyle={styles.button} title="Confirm" onPress={resetScreen} />}
->>>>>>> Stashed changes
     </View>
   );
 };
@@ -65,14 +60,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 16,
     paddingVertical: 90,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#fff",
   },
   directions: {
     fontSize: 16,
     textAlign: "center",
     padding: 20,
     marginBottom: 20,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#ebf5ff",
     borderRadius: 5,
   },
   title: {
@@ -81,8 +76,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   logo: {
-    width: "250px",
-    height: "250px",
+    width: "60%",
+    height: "40%",
     marginBottom: 20,
   },
   button: {

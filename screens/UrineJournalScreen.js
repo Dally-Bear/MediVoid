@@ -16,11 +16,15 @@ const hslToHex = (h, s, l) => {
   return `${f(0)}${f(8)}${f(4)}`; // Remove the '#' character
 };
 
-const UrineJournalScreen = ({ navigation }) => {
+const UrineJournalScreen = ({ }) => {
   const [sliderValue, setSliderValue] = useState(58);
   const [selectedIndex, setSelectedIndex] = useState('M'); 
   const [yellowShade, setYellowShade] = useState(hslToHex(45, 100, 100 - 55 / 2)); 
+  const [showScan, setShowScan] = useState(false);
 
+  const [detailText, setDetailText] = useState('Position the scanner appropriately, then when ready tap start scan to initiate the scan.');
+  const [scanButton, setScanButton] = useState(true);
+  const [scanResult, setScanResult] = useState(null);
   const updateUrineJournal = async (uj_void) => {
     try {
       "use server";
@@ -45,6 +49,33 @@ const UrineJournalScreen = ({ navigation }) => {
     setSliderValue(58);
     setSelectedIndex('M'); 
   };
+  const randNumberGenerator = () => {
+    let ultraNum = Math.floor(Math.random() * 350 + 1);
+    if (ultraNum > 100) {
+      ultraNum = Math.floor(Math.random() * 350 + 1);
+      if (ultraNum > 100) {
+        ultraNum = Math.floor(Math.random() * 350 + 1);
+      }
+    }
+    return ultraNum;
+  };
+  const scanStart = () => {
+    const newNumber = randNumberGenerator();
+    if (newNumber < 50) {
+      setDetailText('The scan is complete, results show bladder is mostly voided.');
+      setScanResult(1);
+    } else if (newNumber < 100) {
+      setDetailText('The scan is complete, results show bladder is partially voided.');
+      setScanResult(1);
+    } else {
+      setDetailText('The scan is complete, results show bladder bladder is not being voided enough, if the issue persists please consult a doctor');
+      setScanResult(0);
+    }
+    setScanButton(false);
+  };
+  const resetScreen = () => {
+
+  }
 
   return (
     <View style={styles.container}>
@@ -80,14 +111,8 @@ const UrineJournalScreen = ({ navigation }) => {
       <Button
         title="Enter with a scan"
         buttonStyle={styles.withScanButton}   
-        onPress={() => {
-          const scanResult = 1; 
-          updateUrineJournal(scanResult); 
-          navigation.navigate('UltrasoundScreen');
-        }}
+        onPress={() => {setShowScan(true)}}
       />
-<<<<<<< Updated upstream
-=======
 
       {showScan&&<Text style={styles.directions}>{detailText}</Text>}
       {showScan&&scanButton&&<Button buttonStyle ={styles.startScanButton} title="Start Scan" onPress={scanStart} />}
@@ -98,7 +123,6 @@ const UrineJournalScreen = ({ navigation }) => {
         setShowScan(false);
         setScanResult(null);
         }} />}
->>>>>>> Stashed changes
     </View>
   );
 };
@@ -158,8 +182,6 @@ const styles = StyleSheet.create({
     marginBottom: 20, 
     width: 200, 
   },
-<<<<<<< Updated upstream
-=======
   logo: {
     width: "60%",
     height: "40%",
@@ -185,7 +207,6 @@ const styles = StyleSheet.create({
     marginBottom: 20, 
     width: 200, 
   },
->>>>>>> Stashed changes
 });
 
 export default UrineJournalScreen;
