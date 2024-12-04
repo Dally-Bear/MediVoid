@@ -102,7 +102,7 @@ const DayDetailsScreen = ({ route, navigation }) => {
                       <Text>Entry type: Urine Journal</Text>
                       <Text>Date: {new Date(entry.date).toLocaleString()}</Text>
                       <Text>Volume: {entry.uj_volume}</Text>
-                      <Text>Void: {entry.uj_void}</Text>
+                      {entry.uj_void == null   ?  <Text>Void: N/A</Text> : entry.uj_void ==1 ? <Text>Void: Mostly Voided</Text> : <Text>Void: Not Voided Enough</Text>}
                       <Text>Color: {entry.uj_color}</Text>
                     </View>
                   )}
