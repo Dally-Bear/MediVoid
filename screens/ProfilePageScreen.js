@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'; // Import the icon library
+import Icon from 'react-native-vector-icons/Ionicons'; 
 
 const ProfilePageScreen = ({ navigation }) => {
   const [notes, setNotes] = useState('');
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
   },
   profileImage: {
     marginBottom: 16,
